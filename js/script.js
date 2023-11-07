@@ -24,18 +24,32 @@ const images = [
 
 /************************************************************************/
 const itemsElem = document.querySelector(".items");
+const thumbsElem = document.querySelector(".thumbs");
+
 //funzione che avendo in ingresso un array di oggetti e la posizione di inserimento crea un elemento in DOM
-objectCreator(images, itemsElem);
+itemCreator(images, itemsElem);
+
+thumbCreator(images, thumbsElem);
+
 //PRIMA IMAGINE
 const item = document.querySelectorAll(".item");
+
+//PRIMA THUMB 
+const thumb = document.querySelectorAll(".thumb");
+
+
 let indexImage = 0;
 item[indexImage].classList.add("active");
+thumb[indexImage].classList.add("active");
+
 
 
 //FUNZIONE CHE QUANDO CLICCO IL BOTTONE MI METTE ACTIVE
 const nextBtn = document.querySelector(".next").addEventListener("click", function() {
     
     item[indexImage].classList.remove("active");
+
+    thumb[indexImage].classList.remove("active");
 
     if (indexImage < item.length - 1) {
         indexImage++
@@ -45,12 +59,17 @@ const nextBtn = document.querySelector(".next").addEventListener("click", functi
     }
     
     item[indexImage].classList.add("active");
+
+    thumb[indexImage].classList.add("active");
 })
 
 
 //FUNZIONE CHE QUANDO CLICCO IL BOTTONE MI METTE ACTIVE
 const prevBtn = document.querySelector(".prev").addEventListener("click", function() {
+    
     item[indexImage].classList.remove("active");
+    thumb[indexImage].classList.remove("active");
+
 
     if (indexImage > 0 ) {
         indexImage--
@@ -60,19 +79,23 @@ const prevBtn = document.querySelector(".prev").addEventListener("click", functi
     }
     
     item[indexImage].classList.add("active");
+    thumb[indexImage].classList.add("active");
 })
 
-
-
+thumb.forEach((curthumb) => {
+    curthumb.addEventListener("click", function(){
+        
+    })
+})
 
 /***********************************************************************************/
 
-/**FUNZIONE objectCreator
+/**FUNZIONE itemCreator
  * funzione che avendo in ingresso un array di oggetti crea un elemento in DOM
  * @param {array, position dom} myArray
  * @returns {element in DOM}
  */
-function objectCreator(myArray, position) {
+function itemCreator(myArray, position) {
     //Funzione che mi apre l'array di oggetti e mi analizza gli elementi
 
     let itemElem ="";
@@ -96,6 +119,34 @@ function objectCreator(myArray, position) {
 
     position.innerHTML += (itemElem);
 }
+
+
+//FUNZIONE PER INSERIRE THUMBSELEM
+function thumbCreator(myArray, position) {
+
+    let thumbElem = ""
+    myArray.forEach((curObject) => {
+        thumbElem += `
+        <img class="thumb" src="${curObject.image}" alt=""> `
+    })
+
+    position.innerHTML += (thumbElem)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
