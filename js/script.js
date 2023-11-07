@@ -24,46 +24,78 @@ const images = [
 
 /************************************************************************/
 const itemsElem = document.querySelector(".items");
-
-
-
-
-//Funzione che mi apre l'array di oggetti e mi analizza gli elementi
-let curObjectImage;
-let curObjectTitlie;
-let curObjectText;
-
-let itemElem ="";
-
-images.forEach((curObject) => {
-    curObjectImage = curObject.image;
-    curObjectTitlie = curObject.title;
-    curObjectText = curObject.text;
-
-// FUNZIONE CHE MI VA A CREARE GLI ELEMENTI NEL DOM
-    itemElem += `
-            <div class="item">
-                <img src="${curObjectImage}" alt="">
-                <div class="text">
-                    <h3>${curObjectTitlie}</h3>
-                    <p>${curObjectText}</p>
-                </div>
-            </div>`
-});
-
-itemsElem.innerHTML += (itemElem);
+//funzione che avendo in ingresso un array di oggetti e la posizione di inserimento crea un elemento in DOM
+objectCreator(images, itemsElem);
+//PRIMA IMAGINE
+const item = document.querySelectorAll(".item");
+let indexImage = 0;
+item[indexImage].classList.add("active");
 
 
 //FUNZIONE CHE QUANDO CLICCO IL BOTTONE MI METTE ACTIVE
-const prev = document.querySelector(".prev").addEventListener("click", function() {
-    console.log("cliccato prev");
+const nextBtn = document.querySelector(".next").addEventListener("click", function() {
+    
+    item[indexImage].classList.remove("active");
+
+    if (indexImage < item.length - 1) {
+        indexImage++
+        
+    } else {
+        indexImage = 0;
+    }
+    
+    item[indexImage].classList.add("active");
 })
 
 
-const item = document.querySelector(".item");
-item.classList.add("active");
+//FUNZIONE CHE QUANDO CLICCO IL BOTTONE MI METTE ACTIVE
+const prevBtn = document.querySelector(".prev").addEventListener("click", function() {
+    item[indexImage].classList.remove("active");
+
+    if (indexImage > 0 ) {
+        indexImage--
+        
+    } else {
+        indexImage = item.length - 1;
+    }
+    
+    item[indexImage].classList.add("active");
+})
 
 
+
+
+/***********************************************************************************/
+
+/**FUNZIONE objectCreator
+ * funzione che avendo in ingresso un array di oggetti crea un elemento in DOM
+ * @param {array, position dom} myArray
+ * @returns {element in DOM}
+ */
+function objectCreator(myArray, position) {
+    //Funzione che mi apre l'array di oggetti e mi analizza gli elementi
+
+    let itemElem ="";
+
+    myArray.forEach((curObject) => {
+        let curObjectImage = curObject.image;
+        let curObjectTitlie = curObject.title;
+        let curObjectText = curObject.text;
+
+    // FUNZIONE CHE MI VA A CREARE GLI ELEMENTI NEL DOM
+
+        itemElem += `
+                <div class="item">
+                    <img src="${curObjectImage}" alt="">
+                    <div class="text">
+                        <h3>${curObjectTitlie}</h3>
+                        <p>${curObjectText}</p>
+                    </div>
+                </div>`
+    });
+
+    position.innerHTML += (itemElem);
+}
 
 
 
